@@ -1,0 +1,15 @@
+[package]
+name = "yew-event-source"
+version = "0.1.0"
+authors = ["Andrew Straw <strawman@astraw.com>"]
+edition = "2018"
+description = "an event source service for the yew web framework"
+license = "MIT/Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/strawlab/yew-event-source"
+
+[dependencies]
+yew = "0.17.4"
+gloo = "0.2.1"
+wasm-bindgen = { version = "0.2.58", features = ["serde-serialize"] }
+web-sys = {version="0.3", features=["EventSource","DomRect","Element","DomTokenList","HtmlCanvasElement","HtmlImageElement"]}
