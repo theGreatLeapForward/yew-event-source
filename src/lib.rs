@@ -18,10 +18,16 @@ pub enum EventSourceStatus {
     Error,
 }
 
+/// Ready state of an event source
+///
+/// [Documented at MDN](https://developer.mozilla.org/en-US/docs/Web/API/EventSource/readyState)
 #[derive(PartialEq, Debug)]
 pub enum ReadyState {
+    /// The event source connection is connecting.
     Connecting,
+    /// The event source connection is open.
     Open,
+    /// The event source connection is closed.
     Closed,
 }
 
@@ -55,6 +61,10 @@ impl EventSourceTask {
             .push(EventListener::new(&self.event_source, event_type, callback));
     }
 
+    /// Register a callback for events of a given type
+    ///
+    /// This registers an event listener, which will fire `callback` when an
+    /// event of `event_type` occurs.
     pub fn add_event_listener<S, OUT: 'static>(&mut self, event_type: S, callback: Callback<OUT>)
     where
         S: Into<Cow<'static, str>>,
@@ -78,6 +88,7 @@ impl EventSourceTask {
         self.add_unwrapped_event_listener(event_type, wrapped_callback);
     }
 
+    /// Query the ready state of the event source.
     pub fn ready_state(&self) -> ReadyState {
         match self.event_source.ready_state() {
             web_sys::EventSource::CONNECTING => ReadyState::Connecting,
@@ -99,13 +110,15 @@ impl fmt::Debug for EventSourceTask {
 pub struct EventSourceService {}
 
 impl EventSourceService {
-    /// Creates a new service instance connected to `App` by provided `sender`.
+    /// Creates a new service instance.
     pub fn new() -> Self {
         Self {}
     }
 
-    /// Connects to a server by an event source connection. Needs two functions to generate
-    /// data and notification messages.
+    /// Connects to a server at `url` by an event source connection.
+    ///
+    /// The `notification` callback is fired when either an open or error event
+    /// happens.
     pub fn connect(
         &mut self,
         url: &str,
