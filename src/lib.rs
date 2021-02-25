@@ -1,4 +1,4 @@
-//! Event stream handling
+//! Event stream handling for the yew framework
 use std::fmt;
 
 use gloo::events::EventListener;

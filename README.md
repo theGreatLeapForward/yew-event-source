@@ -8,6 +8,9 @@
 For an example of use, please see the [yew frontend demo for
 `bui-backend`](https://github.com/astraw/bui-backend/tree/main/bui-demo/frontend_yew).
 
+You may also be interested in [this similar crate by
+liquidblock](https://github.com/liquidblock/yew-sse).
+
 ## Code of conduct
 
 Anyone who interacts with this software in any space, including but not limited
