@@ -34,6 +34,7 @@ pub struct EventSourceTask {
 }
 
 impl EventSourceTask {
+    #![allow(clippy::unnecessary_wraps)]
     fn new(
         event_source: EventSource,
         notification: Callback<EventSourceStatus>,
