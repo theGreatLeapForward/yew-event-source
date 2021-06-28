@@ -1,6 +1,6 @@
 [package]
 name = "yew-event-source"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Andrew Straw <strawman@astraw.com>"]
 edition = "2018"
 description = "an event source service for the yew web framework"
