@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "https://github.com/strawlab/yew-event-source"
 
 [dependencies]
-yew = "0.17.4"
+yew = "0.18"
 gloo = "0.2.1"
 wasm-bindgen = { version = "0.2.58", features = ["serde-serialize"] }
 web-sys = {version="0.3", features=["EventSource","DomRect","Element","DomTokenList","HtmlCanvasElement","HtmlImageElement"]}
