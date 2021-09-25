@@ -1,7 +1,7 @@
 //! Event stream handling for the yew framework
 use std::fmt;
 
-use gloo::events::EventListener;
+use gloo_events::EventListener;
 use std::borrow::Cow;
 use wasm_bindgen::JsCast;
 use web_sys::{Event, EventSource, MessageEvent};
