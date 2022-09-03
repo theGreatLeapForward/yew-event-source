@@ -6,8 +6,6 @@ use std::borrow::Cow;
 use wasm_bindgen::JsCast;
 use web_sys::{Event, EventSource, MessageEvent};
 use yew::callback::Callback;
-use yew::format::{FormatError, Text};
-use yew::services::Task;
 
 /// A status of an event source connection. Used for status notification.
 #[derive(PartialEq, Debug)]
@@ -31,7 +29,7 @@ pub enum ReadyState {
     Closed,
 }
 
-/// A handle to control current event source connection. Implements `Task` and could be canceled.
+/// A handle to control current event source connection.
 pub struct EventSourceTask {
     event_source: EventSource,
     // We need to keep this else it is cleaned up on drop.
@@ -68,7 +66,7 @@ impl EventSourceTask {
     pub fn add_event_listener<S, OUT: 'static>(&mut self, event_type: S, callback: Callback<OUT>)
     where
         S: Into<Cow<'static, str>>,
-        OUT: From<Text>,
+        OUT: From<Result<String, String>>,
     {
         // This will convert from a generic `Event` into a `MessageEvent` taking
         // text, as is required by an event source.
@@ -79,7 +77,7 @@ impl EventSourceTask {
             let data = if let Some(text) = text {
                 Ok(text)
             } else {
-                Err(FormatError::ReceivedBinaryForText.into())
+                Err("sus".to_string())
             };
 
             let out = OUT::from(data);
@@ -144,19 +142,5 @@ impl EventSourceService {
         result.add_unwrapped_event_listener("open", listener_open);
         result.add_unwrapped_event_listener("error", listener_error);
         Ok(result)
-    }
-}
-
-impl Task for EventSourceTask {
-    fn is_active(&self) -> bool {
-        self.ready_state() == ReadyState::Open
-    }
-}
-
-impl Drop for EventSourceTask {
-    fn drop(&mut self) {
-        if self.is_active() {
-            self.event_source.close()
-        }
     }
 }
